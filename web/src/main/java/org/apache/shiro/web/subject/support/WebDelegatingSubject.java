@@ -31,6 +31,7 @@ import org.apache.shiro.web.util.WebUtils;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import org.apache.shiro.util.Adapter;
 
 /**
  * Default {@link WebSubject WebSubject} implementation that additional ensures the ability to retain a
@@ -61,6 +62,14 @@ public class WebDelegatingSubject extends DelegatingSubject implements WebSubjec
         this.servletRequest = request;
         this.servletResponse = response;
     }
+
+    public WebDelegatingSubject(ServletRequest servletRequest, ServletResponse servletResponse, PrincipalCollection principals, boolean authenticated, String host, Session session, boolean sessionCreationEnabled, Adapter<SecurityManager> securityManagerAdapter, SecurityManager securityManager) {
+	super(principals, authenticated, host, session, sessionCreationEnabled, securityManagerAdapter, securityManager);
+	this.servletRequest = servletRequest;
+	this.servletResponse = servletResponse;
+    }
+    
+    
 
     public ServletRequest getServletRequest() {
         return servletRequest;

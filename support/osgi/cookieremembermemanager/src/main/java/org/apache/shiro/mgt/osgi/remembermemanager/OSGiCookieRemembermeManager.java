@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package org.apache.shiro.mgt.osgi.sessionfactory;
+package org.apache.shiro.mgt.osgi.remembermemanager;
 
-import org.apache.shiro.session.mgt.SessionFactory;
-import org.apache.shiro.session.mgt.SimpleSessionFactory;
+import org.apache.shiro.mgt.RememberMeManager;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.osgi.service.component.annotations.Component;
 
 /**
  *
  * @author mnn
  */
-@Component(service = SessionFactory.class)
-public class OSGiSimpleSessionFactory extends SimpleSessionFactory{
+@Component(name = "OSGiCookieRemembermeManager", immediate = true, service = RememberMeManager.class)
+public class OSGiCookieRemembermeManager extends CookieRememberMeManager{
     
 }

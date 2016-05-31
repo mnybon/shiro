@@ -17,7 +17,6 @@
 package org.apache.shiro.util;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -28,7 +27,7 @@ import org.osgi.util.tracker.ServiceTracker;
 public class OSGiAdapter<T extends Object> implements Adapter<T>{
     ServiceTracker<T, T> tracker;
 
-    public OSGiAdapter(BundleContext context, ServiceReference<T> ref) {
+    public OSGiAdapter(BundleContext context, Class<T> ref) {
 	tracker = new ServiceTracker<T, T>(context, ref, null);
 	tracker.open();
     }

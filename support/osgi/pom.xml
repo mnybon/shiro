@@ -32,14 +32,21 @@
     <packaging>pom</packaging>
 
     <modules>
-	    <module>securitymanager</module>
+	    <module>defaultsecuritymanager</module>
 	    <module>eventbus</module>
 	    <module>sessionmanager</module>
 	    <module>subjectfactory</module>
 	    <module>sessionfactory</module>		
 	    <module>sessionDAO</module>		
+	    <module>defaultsubjectdao</module>
+	    <module>defaultsessionstorageevaluator</module>
 	    <module>authstrategyonlyone</module>
-		<module>configadmin-realm</module>
+	    <module>configadmin-realm</module>
+	    <module>websecuritymanager</module>
+	    <module>defaultwebsessionstorageevaluator</module>
+	    <module>websubjectfactory</module>
+	    <module>cookieremembermemanager</module>
+	    <module>servletcontainersessionmanager</module>
 		
 	    <module>karaf_feature</module>
 	    <module>itest</module>

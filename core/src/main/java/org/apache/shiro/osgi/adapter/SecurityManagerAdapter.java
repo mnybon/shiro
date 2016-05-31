@@ -17,14 +17,8 @@
 package org.apache.shiro.osgi.adapter;
 
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.subject.Subject;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -45,7 +39,7 @@ public class SecurityManagerAdapter{
 	SecurityUtils.setSecurityManager(securityManager);
     }
     
-    public void unbindSecurityManager(SecurityManager auth){
+    public void unbindSecurityManager(SecurityManager securityManager){
 	SecurityUtils.setSecurityManager(null);
     }
     

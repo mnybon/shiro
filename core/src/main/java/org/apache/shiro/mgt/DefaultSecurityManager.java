@@ -86,10 +86,23 @@ public class DefaultSecurityManager extends SessionsSecurityManager {
      * Default no-arg constructor.
      */
     public DefaultSecurityManager() {
-        super();
-        this.subjectFactory = new DefaultSubjectFactory();
-        this.subjectDAO = new DefaultSubjectDAO();
+	this(null, new DefaultSubjectDAO(), new DefaultSubjectFactory());
     }
+
+    /**
+     * Configurable constructor. .
+     * @param rememberMeManager The RememberMeManager to use for this SecurityManager. Can be null.
+     * @param subjectDAO The SubjectDAO to use for this SecurityManager. Can not be null.
+     * @param subjectFactory The SubjectFactory to use for this SecurityManager, Can not be null.
+     */
+    public DefaultSecurityManager(RememberMeManager rememberMeManager, SubjectDAO subjectDAO, SubjectFactory subjectFactory) {
+	super();
+	this.rememberMeManager = rememberMeManager;
+	this.subjectDAO = subjectDAO;
+	this.subjectFactory = subjectFactory;
+    }
+    
+    
 
     /**
      * Supporting constructor for a single-realm application.

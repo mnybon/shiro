@@ -14,17 +14,20 @@
  * limitations under the License.
  */
 
-package org.apache.shiro.mgt.osgi.sessionfactory;
+package org.apache.shiro.mgt.osgi.sessionmanager;
 
-import org.apache.shiro.session.mgt.SessionFactory;
-import org.apache.shiro.session.mgt.SimpleSessionFactory;
+import org.apache.shiro.session.mgt.SessionManager;
+import org.apache.shiro.web.session.mgt.ServletContainerSessionManager;
+import org.apache.shiro.web.session.mgt.WebSessionManager;
 import org.osgi.service.component.annotations.Component;
 
 /**
  *
  * @author mnn
  */
-@Component(service = SessionFactory.class)
-public class OSGiSimpleSessionFactory extends SimpleSessionFactory{
+@Component(name = "OSGiServletContainerSessionManager", service = {SessionManager.class, WebSessionManager.class})
+public class OSGiServletContainerSessionManager extends ServletContainerSessionManager{
     
+    
+ 
 }

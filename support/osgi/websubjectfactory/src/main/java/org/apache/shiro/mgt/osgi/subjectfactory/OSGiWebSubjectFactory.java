@@ -16,15 +16,17 @@
 
 package org.apache.shiro.mgt.osgi.subjectfactory;
 
-import org.apache.shiro.mgt.DefaultSubjectFactory;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.mgt.SubjectFactory;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.subject.SubjectContext;
-import org.apache.shiro.subject.support.DelegatingSubject;
 import org.apache.shiro.util.OSGiAdapter;
+import org.apache.shiro.web.subject.WebSubjectContext;
+import org.apache.shiro.web.subject.support.WebDelegatingSubject;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -33,38 +35,39 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author mnn
  */
-@Component(name = "OSGiDefaultSubjectFactory", service = SubjectFactory.class, immediate = true)
-public class OSGiSubjectFactory extends DefaultSubjectFactory implements SubjectFactory{
-    BundleContext bundleContext;
+@Component(name = "OSGiDefaultWebSubjectFactory", service = SubjectFactory.class, immediate = true)
+public class OSGiWebSubjectFactory extends OSGiSubjectFactory implements SubjectFactory{
 
-    public OSGiSubjectFactory(BundleContext context) {
+    public OSGiWebSubjectFactory(BundleContext context) {
 	this.bundleContext = context;
     }
 
-    public OSGiSubjectFactory() {
+    public OSGiWebSubjectFactory() {
     }
     
     @Activate
+    @Override
     public void activate(BundleContext bundleContext){
 	this.bundleContext = bundleContext;
-    }
-    
-    @Override
-    protected Subject newSubjectInstance(PrincipalCollection principals, boolean authenticated, String host, Session session, SecurityManager securityManager) {
-	return new DelegatingSubject(principals, authenticated, host, session, true, new OSGiAdapter<SecurityManager>(bundleContext, SecurityManager.class), securityManager);
     }
 
     @Override
     public Subject createSubject(SubjectContext context) {
-	
-        SecurityManager securityManager = context.resolveSecurityManager();
-        Session session = context.resolveSession();
-        boolean sessionCreationEnabled = context.isSessionCreationEnabled();
-        PrincipalCollection principals = context.resolvePrincipals();
-        boolean authenticated = context.resolveAuthenticated();
-        String host = context.resolveHost();
+        if (!(context instanceof WebSubjectContext)) {
+            return super.createSubject(context);
+        }
+        WebSubjectContext wsc = (WebSubjectContext) context;
+        SecurityManager securityManager = wsc.resolveSecurityManager();
+        Session session = wsc.resolveSession();
+        boolean sessionEnabled = wsc.isSessionCreationEnabled();
+        PrincipalCollection principals = wsc.resolvePrincipals();
+        boolean authenticated = wsc.resolveAuthenticated();
+        String host = wsc.resolveHost();
+        ServletRequest request = wsc.resolveServletRequest();
+        ServletResponse response = wsc.resolveServletResponse();
 
-        return new DelegatingSubject(principals, authenticated, host, session, sessionCreationEnabled, new OSGiAdapter<SecurityManager>(bundleContext, SecurityManager.class), securityManager);
+	OSGiAdapter<SecurityManager> adapter = new OSGiAdapter<SecurityManager>(bundleContext, SecurityManager.class);
+	return new WebDelegatingSubject(request, response, principals, authenticated, host, session, sessionEnabled, adapter, securityManager);
     }
     
     

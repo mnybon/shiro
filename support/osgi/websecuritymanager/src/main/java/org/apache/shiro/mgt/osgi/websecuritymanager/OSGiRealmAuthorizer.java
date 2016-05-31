@@ -14,17 +14,26 @@
  * limitations under the License.
  */
 
-package org.apache.shiro.mgt.osgi.sessionfactory;
+package org.apache.shiro.mgt.osgi.websecuritymanager;
 
-import org.apache.shiro.session.mgt.SessionFactory;
-import org.apache.shiro.session.mgt.SimpleSessionFactory;
-import org.osgi.service.component.annotations.Component;
+import org.apache.shiro.authz.Authorizer;
+import org.apache.shiro.authz.ModularRealmAuthorizer;
 
 /**
  *
  * @author mnn
  */
-@Component(service = SessionFactory.class)
-public class OSGiSimpleSessionFactory extends SimpleSessionFactory{
+public class OSGiRealmAuthorizer extends ModularRealmAuthorizer implements Authorizer{
+
+    //We should avoid throwing permission resolvers around, this should be done via service registry if global.
+    @Override
+    protected void applyRolePermissionResolverToRealms() {}
+
+    @Override
+    protected void applyPermissionResolverToRealms() {}
+    
+    
+    
+    
     
 }

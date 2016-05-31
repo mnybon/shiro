@@ -14,12 +14,22 @@
       <feature>MemorySessionDAO</feature>
       <feature>ConfigAdminRealm</feature>
   </feature>
+  
+  <feature name="Preset_Web" version="${project.version}">
+      <feature>Web_SecurityManager</feature>
+      <feature>ServletContainerSessionManager</feature>
+      <feature>Default_EventBus</feature>
+      <feature>AuthStrategyOne</feature>
+      <feature>ConfigAdminRealm</feature>
+  </feature>
 
   <feature name="Default_SecurityManager" version="${project.version}">
       <feature>scr</feature>
       <feature>shiro-core</feature>
       <bundle>mvn:${project.groupId}/shiro-osgi-defaultsecuritymanager/${project.version}</bundle>
       <bundle>mvn:${project.groupId}/shiro-osgi-delegatingsubjectfactory/${project.version}</bundle>
+      <bundle>mvn:${project.groupId}/shiro-osgi-defaultsubjectdao/${project.version}</bundle>
+      <bundle>mvn:${project.groupId}/shiro-osgi-defaultsessionstorageevaluator/${project.version}</bundle>
   </feature>
 
   <feature name="Default_SessionManager" version="${project.version}">
@@ -53,6 +63,29 @@
       <bundle>mvn:${project.groupId}/shiro-osgi-configadminrealm/${project.version}</bundle>
   </feature>
       
+  <feature name="Web_SecurityManager" version="${project.version}">
+      <feature>scr</feature>
+      <feature>shiro-core</feature>
+      <feature>shiro-web</feature>
+      <bundle>mvn:${project.groupId}/shiro-osgi-websecuritymanager/${project.version}</bundle>
+      <bundle>mvn:${project.groupId}/shiro-osgi-defaultsubjectdao/${project.version}</bundle>
+      <bundle>mvn:${project.groupId}/shiro-osgi-delegatingwebsubjectfactory/${project.version}</bundle>
+      <bundle>mvn:${project.groupId}/shiro-osgi-defaultwebsessionstorageevaluator/${project.version}</bundle></features>
+  </feature>
+  
+  <feature name="Cookie_RememberMeManager" version="${project.version}">
+      <feature>scr</feature>
+      <feature>shiro-core</feature>
+      <bundle>mvn:${project.groupId}/shiro-osgi-cookieremembermemanager/${project.version}</bundle>
+  </feature>
+
+  <feature name="ServletContainerSessionManager" version="${project.version}">
+      <feature>scr</feature>
+      <feature>shiro-core</feature>
+      <bundle>mvn:${project.groupId}/shiro-osgi-websessionmanager/${project.version}</bundle>
+  </feature></feature>
+  
+  
   
 </features>
 

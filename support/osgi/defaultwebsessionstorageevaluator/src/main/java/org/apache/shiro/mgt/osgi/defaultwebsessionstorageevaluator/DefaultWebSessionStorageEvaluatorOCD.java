@@ -14,17 +14,15 @@
  * limitations under the License.
  */
 
-package org.apache.shiro.mgt.osgi.sessionfactory;
+package org.apache.shiro.mgt.osgi.defaultwebsessionstorageevaluator;
 
-import org.apache.shiro.session.mgt.SessionFactory;
-import org.apache.shiro.session.mgt.SimpleSessionFactory;
-import org.osgi.service.component.annotations.Component;
+import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
 /**
  *
  * @author mnn
  */
-@Component(service = SessionFactory.class)
-public class OSGiSimpleSessionFactory extends SimpleSessionFactory{
-    
+@ObjectClassDefinition(name = "DefaultWebSessionStorageEvaluator", id = "org.apache.shiro.mgt.osgi.defaultwebsessionstorageevaluator", pid = "org.apache.shiro.mgt.osgi.defaultwebsessionstorageevaluator")
+@interface DefaultWebSessionStorageEvaluatorOCD {
+    public boolean enableSessionStorage() default true;
 }

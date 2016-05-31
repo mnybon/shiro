@@ -57,7 +57,8 @@ public class DefaultWebSessionStorageEvaluator extends DefaultSessionStorageEval
      * @since 1.2.1
      */
     //package protected on purpose to maintain point-version compatibility: (1.2.3 -> 1.2.1 should work always).
-    void setSessionManager(SessionManager sessionManager) {
+    //changed to protected on version 2.alpha.0 to accommodate the OSGification of shiro
+    protected void setSessionManager(SessionManager sessionManager) {
         this.sessionManager = sessionManager;
     }
 

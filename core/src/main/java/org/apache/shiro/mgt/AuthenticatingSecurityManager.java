@@ -23,6 +23,8 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.Authenticator;
 import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
+import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.event.EventBus;
 import org.apache.shiro.util.LifecycleUtils;
 
 
@@ -57,6 +59,13 @@ public abstract class AuthenticatingSecurityManager extends RealmSecurityManager
         super();
         this.authenticator = new ModularRealmAuthenticator();
     }
+
+    public AuthenticatingSecurityManager(Authenticator authenticator, CacheManager cacheManager, EventBus eventBus) {
+	super(cacheManager, eventBus);
+	this.authenticator = authenticator;
+    }
+    
+    
 
     /**
      * Returns the delegate <code>Authenticator</code> instance that this SecurityManager uses to perform all

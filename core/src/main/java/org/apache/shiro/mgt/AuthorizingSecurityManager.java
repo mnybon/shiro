@@ -27,6 +27,9 @@ import org.apache.shiro.util.LifecycleUtils;
 
 import java.util.Collection;
 import java.util.List;
+import org.apache.shiro.authc.Authenticator;
+import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.event.EventBus;
 
 
 /**
@@ -59,6 +62,13 @@ public abstract class AuthorizingSecurityManager extends AuthenticatingSecurityM
         super();
         this.authorizer = new ModularRealmAuthorizer();
     }
+
+    public AuthorizingSecurityManager(Authorizer authorizer, Authenticator authenticator, CacheManager cacheManager, EventBus eventBus) {
+	super(authenticator, cacheManager, eventBus);
+	this.authorizer = authorizer;
+    }
+    
+    
 
     /**
      * Returns the underlying wrapped <tt>Authorizer</tt> instance to which this <tt>SecurityManager</tt>

@@ -18,16 +18,10 @@
  */
 package org.apache.shiro.web.mgt;
 
-import java.io.Serializable;
-import java.util.Collection;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
-import org.apache.shiro.mgt.RememberMeManager;
 import org.apache.shiro.mgt.SessionStorageEvaluator;
 import org.apache.shiro.mgt.SubjectDAO;
-import org.apache.shiro.mgt.SubjectFactory;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.session.mgt.SessionContext;
 import org.apache.shiro.session.mgt.SessionKey;
@@ -43,6 +37,17 @@ import org.apache.shiro.web.subject.support.DefaultWebSubjectContext;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import java.io.Serializable;
+import java.util.Collection;
+import org.apache.shiro.authc.Authenticator;
+import org.apache.shiro.authz.Authorizer;
+import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.event.EventBus;
+import org.apache.shiro.mgt.RememberMeManager;
+import org.apache.shiro.mgt.SubjectFactory;
 
 
 /**
@@ -69,26 +74,18 @@ public class DefaultWebSecurityManager extends DefaultSecurityManager implements
     private String sessionMode;
 
     public DefaultWebSecurityManager() {
-        this(new DefaultWebSubjectFactory(), buildSubjectDAO(), new CookieRememberMeManager(), new ServletContainerSessionManager());
-    }
-    
-    /**
-     *
-     * @param subjectFactory The SubjectFactory to use. Can not be null.
-     * @param subjectDAO The SubjectDAO to use, Can not be null.
-     * @param rememberMeManager The RememberMeManager to use. Can not be null.
-     * @param sessionManager The SessionManager to use. Can not be null.
-     */
-    public DefaultWebSecurityManager(SubjectFactory subjectFactory, SubjectDAO subjectDAO, RememberMeManager rememberMeManager, SessionManager sessionManager){
-	super(rememberMeManager, subjectDAO, subjectFactory);
-    }
-    
-    private static SubjectDAO buildSubjectDAO(){
-	DefaultSubjectDAO defaultDAO = new DefaultSubjectDAO();
-	defaultDAO.setSessionStorageEvaluator(new DefaultWebSessionStorageEvaluator());
-	return defaultDAO;
+        super();
+        ((DefaultSubjectDAO) this.subjectDAO).setSessionStorageEvaluator(new DefaultWebSessionStorageEvaluator());
+        this.sessionMode = HTTP_SESSION_MODE;
+        setSubjectFactory(new DefaultWebSubjectFactory());
+        setRememberMeManager(new CookieRememberMeManager());
+        setSessionManager(new ServletContainerSessionManager());
     }
 
+    public DefaultWebSecurityManager(RememberMeManager rememberMeManager, SubjectDAO subjectDAO, SubjectFactory subjectFactory, SessionManager sessionManager, Authorizer authorizer, Authenticator authenticator, CacheManager cacheManager, EventBus eventBus) {
+	super(rememberMeManager, subjectDAO, subjectFactory, sessionManager, authorizer, authenticator, cacheManager, eventBus);
+    }
+    
     @SuppressWarnings({"UnusedDeclaration"})
     public DefaultWebSecurityManager(Realm singleRealm) {
         this();
@@ -121,7 +118,7 @@ public class DefaultWebSecurityManager extends DefaultSecurityManager implements
     }
 
     //since 1.2.1 for fixing SHIRO-350:
-    protected void applySessionManagerToSessionStorageEvaluatorIfPossible() {
+    private void applySessionManagerToSessionStorageEvaluatorIfPossible() {
         SubjectDAO subjectDAO = getSubjectDAO();
         if (subjectDAO instanceof DefaultSubjectDAO) {
             SessionStorageEvaluator evaluator = ((DefaultSubjectDAO)subjectDAO).getSessionStorageEvaluator();

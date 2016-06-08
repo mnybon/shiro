@@ -54,10 +54,14 @@ public abstract class CachingSecurityManager implements SecurityManager, Destroy
      * Default no-arg constructor that will automatically attempt to initialize a default cacheManager
      */
     public CachingSecurityManager() {
-        //use a default event bus:
-        setEventBus(new DefaultEventBus());
+        this(null, new DefaultEventBus());
     }
 
+    public CachingSecurityManager(CacheManager cacheManager, EventBus eventBus) {
+	this.cacheManager = cacheManager;
+	this.eventBus = eventBus;
+    }
+    
     /**
      * Returns the CacheManager used by this SecurityManager.
      *

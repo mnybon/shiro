@@ -18,7 +18,10 @@
  */
 package org.apache.shiro.mgt;
 
+import org.apache.shiro.authc.Authenticator;
 import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.authz.Authorizer;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.CacheManagerAware;
 import org.apache.shiro.event.EventBus;
 import org.apache.shiro.event.EventBusAware;
@@ -63,6 +66,14 @@ public abstract class SessionsSecurityManager extends AuthorizingSecurityManager
         this.sessionManager = new DefaultSessionManager();
         applyCacheManagerToSessionManager();
     }
+
+    public SessionsSecurityManager(SessionManager sessionManager, Authorizer authorizer, Authenticator authenticator, CacheManager cacheManager, EventBus eventBus) {
+	super(authorizer, authenticator, cacheManager, eventBus);
+	this.sessionManager = sessionManager;
+	applyCacheManagerToSessionManager();
+    }
+    
+    
 
     /**
      * Sets the underlying delegate {@link SessionManager} instance that will be used to support this implementation's

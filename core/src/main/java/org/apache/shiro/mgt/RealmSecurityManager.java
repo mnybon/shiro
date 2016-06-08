@@ -50,6 +50,10 @@ public abstract class RealmSecurityManager extends CachingSecurityManager {
         super();
     }
 
+    public RealmSecurityManager(CacheManager cacheManager, EventBus eventBus) {
+	super(cacheManager, eventBus);
+    }
+    
     /**
      * Convenience method for applications using a single realm that merely wraps the realm in a list and then invokes
      * the {@link #setRealms} method.

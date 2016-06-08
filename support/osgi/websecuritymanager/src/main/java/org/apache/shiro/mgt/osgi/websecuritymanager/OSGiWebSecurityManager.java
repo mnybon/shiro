@@ -53,10 +53,7 @@ public class OSGiWebSecurityManager extends DefaultWebSecurityManager{
     private ModularRealmAuthenticator realmAuthenticator = new ModularRealmAuthenticator();
     
     public OSGiWebSecurityManager() {
-	super();
-	setSubjectFactory(null);
-        setRememberMeManager(null);
-        setSessionManager(null);
+	super(null, null, null, null, null, null, null, null);
 
     }
     
@@ -212,8 +209,8 @@ public class OSGiWebSecurityManager extends DefaultWebSecurityManager{
     protected void afterSessionManagerSet(){}
     @Override
     public void setSessionMode(String sessionMode) {}
-    @Override
-    protected void applySessionManagerToSessionStorageEvaluatorIfPossible() {}
+//    @Override
+//    protected void applySessionManagerToSessionStorageEvaluatorIfPossible() {}
     
     
     

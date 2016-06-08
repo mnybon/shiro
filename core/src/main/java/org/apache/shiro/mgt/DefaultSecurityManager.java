@@ -41,6 +41,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.Collection;
+import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.event.EventBus;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.subject.support.SubjectThreadState;
 import org.apache.shiro.util.ThreadState;
 
@@ -86,17 +89,13 @@ public class DefaultSecurityManager extends SessionsSecurityManager {
      * Default no-arg constructor.
      */
     public DefaultSecurityManager() {
-	this(null, new DefaultSubjectDAO(), new DefaultSubjectFactory());
+        super();
+        this.subjectFactory = new DefaultSubjectFactory();
+        this.subjectDAO = new DefaultSubjectDAO();
     }
 
-    /**
-     * Configurable constructor. .
-     * @param rememberMeManager The RememberMeManager to use for this SecurityManager. Can be null.
-     * @param subjectDAO The SubjectDAO to use for this SecurityManager. Can not be null.
-     * @param subjectFactory The SubjectFactory to use for this SecurityManager, Can not be null.
-     */
-    public DefaultSecurityManager(RememberMeManager rememberMeManager, SubjectDAO subjectDAO, SubjectFactory subjectFactory) {
-	super();
+    public DefaultSecurityManager(RememberMeManager rememberMeManager, SubjectDAO subjectDAO, SubjectFactory subjectFactory, SessionManager sessionManager, Authorizer authorizer, Authenticator authenticator, CacheManager cacheManager, EventBus eventBus) {
+	super(sessionManager, authorizer, authenticator, cacheManager, eventBus);
 	this.rememberMeManager = rememberMeManager;
 	this.subjectDAO = subjectDAO;
 	this.subjectFactory = subjectFactory;

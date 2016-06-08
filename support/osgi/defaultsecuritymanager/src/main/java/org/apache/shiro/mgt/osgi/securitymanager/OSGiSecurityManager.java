@@ -49,13 +49,16 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class OSGiSecurityManager extends DefaultSecurityManager{
     private Lock realmLock = new ReentrantLock();
     
-    private OSGiRealmAuthorizer realmAuthorizer = new OSGiRealmAuthorizer();
-    private ModularRealmAuthenticator realmAuthenticator = new ModularRealmAuthenticator();
+    private final OSGiRealmAuthorizer realmAuthorizer = new OSGiRealmAuthorizer();
+    private final ModularRealmAuthenticator realmAuthenticator = new ModularRealmAuthenticator();
     
     public OSGiSecurityManager() {
-	super(null, null, null);
-	setSubjectFactory(null);
-	setSubjectDAO(null);
+	super(null, null, null, null, null, null, null, null);
+	setAuthenticator(realmAuthenticator);
+	setAuthorizer(realmAuthorizer);
+	//super();
+	//setSubjectFactory(null);
+	//setSubjectDAO(null);
     }
     
     

@@ -28,8 +28,8 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>samples-web</artifactId>
-    <name>Apache Shiro :: Samples :: Web</name>
+    <artifactId>samples-osgi-web</artifactId>
+    <name>Apache Shiro :: Samples :: OSGi-Web</name>
     <packaging>war</packaging>
 
     <build>
@@ -135,10 +135,12 @@
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
+			<scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-web</artifactId>
+			<scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.mortbay.jetty</groupId>

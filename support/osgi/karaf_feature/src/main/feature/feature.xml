@@ -3,7 +3,6 @@
 	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	  xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.0.0" 
 	  name="Apache-Shiro">
-  <repository>mvn:org.apache.karaf.features/standard/${karaf.target.version}/xml/features</repository>
   <repository>mvn:org.apache.shiro/shiro-features/${project.version}/xml/features</repository>
   
   <feature name="Preset_Default" version="${project.version}">
@@ -70,7 +69,7 @@
       <bundle>mvn:${project.groupId}/shiro-osgi-websecuritymanager/${project.version}</bundle>
       <bundle>mvn:${project.groupId}/shiro-osgi-defaultsubjectdao/${project.version}</bundle>
       <bundle>mvn:${project.groupId}/shiro-osgi-delegatingwebsubjectfactory/${project.version}</bundle>
-      <bundle>mvn:${project.groupId}/shiro-osgi-defaultwebsessionstorageevaluator/${project.version}</bundle></features>
+      <bundle>mvn:${project.groupId}/shiro-osgi-defaultwebsessionstorageevaluator/${project.version}</bundle>
   </feature>
   
   <feature name="Cookie_RememberMeManager" version="${project.version}">
@@ -82,8 +81,12 @@
   <feature name="ServletContainerSessionManager" version="${project.version}">
       <feature>scr</feature>
       <feature>shiro-core</feature>
-      <bundle>mvn:${project.groupId}/shiro-osgi-websessionmanager/${project.version}</bundle>
-  </feature></feature>
+      <bundle>mvn:${project.groupId}/servletcontainersessionmanager/${project.version}</bundle>
+  </feature>
+  
+  <feature start-level="93" name="WebSample" version="${project.version}">
+      <bundle>mvn:${project.groupId}.samples/samples-osgi-web/${project.version}/war</bundle>
+  </feature>
   
   
   
